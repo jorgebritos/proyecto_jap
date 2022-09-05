@@ -1,7 +1,5 @@
-//array donde se cargarán los datos recibidos:
 let productsArray = [];
 
-//función que recibe un array con los datos, y los muestra en pantalla a través el uso del DOM
 function showProducts(array) {
     let htmlContentToAppend = "";
 
@@ -30,16 +28,6 @@ function showProducts(array) {
     document.getElementById("title").innerHTML = "Verás aquí todos los productos de la categoria seleccionada"
     document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
 }
-
-
-/* 
-EJECUCIÓN:
-
--Al cargar la página se llama a getJSONData() pasándole por parámetro la dirección para obtener el listado.
--Se verifica el estado del objeto que devuelve, y, si es correcto, se cargan los datos en productsArray.
--Por último, se llama a showProducts() pasándole por parámetro productsArray.
-
-*/
 
 document.addEventListener("DOMContentLoaded", function (e) {
     getJSONData(PRODUCTS_URL + localStorage.getItem("catID") + EXT_TYPE).then(function (resultObj) {
