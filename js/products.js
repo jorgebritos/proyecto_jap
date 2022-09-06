@@ -1,12 +1,17 @@
 let productsArray = [];
 
+function asd(id) {
+    localStorage.setItem("prodID", id);
+    location.href="./product-info.html";    
+}
+
 function showProducts(array) {
     let htmlContentToAppend = "";
 
     for (let i = 0; i < array.length; i++) {
         let product = array[i];
         htmlContentToAppend += `
-        <div class="list-group-item list-group-item-action">
+        <div class="list-group-item list-group-item-action" onclick=asd(${product.id}) style="cursor: pointer">
             <div class="row">
                 <div class="col-3">
                     <img src="` + product.image + `" alt="product image" class="img-thumbnail">
@@ -19,7 +24,6 @@ function showProducts(array) {
                         </div>
                         <small class="text-muted">` + product.soldCount + ` artículos</small> 
                     </div>
-
                 </div>
             </div>
         </div>
@@ -40,8 +44,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
 document.getElementById("rangeFilterCount").addEventListener("click", function () {
     //Obtengo el mínimo y máximo de los intervalos para filtrar por precio
-    minCount = document.getElementById("rangeFilterCountMin").value;
-    maxCount = document.getElementById("rangeFilterCountMax").value;
+    minCost = document.getElementById("rangeFilterCountMin").value;
+    maxCost = document.getElementById("rangeFilterCountMax").value;
     products = [];
 
     productsArray.forEach(product => {
