@@ -1,6 +1,8 @@
 //VALORES
 let product = {};
 let comments = [];
+
+//Donde se guarda el comentario que crea el usuario
 let comment = {};
 
 //OBJETOS
@@ -10,6 +12,8 @@ let newComment = document.getElementById("sendComment")
 
 //OBTENER DATOS DEL PRODUCTO Y SUS COMENTARIOS
 document.addEventListener("DOMContentLoaded", function (e) {
+
+    //PRODUCTO
     getJSONData(PRODUCT_INFO_URL + localStorage.getItem("prodID") + EXT_TYPE).then(function (resultObj) {
         if (resultObj.status === "ok") {
             product = resultObj.data;
@@ -17,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         }
     });
 
+    //COMENTARIOS
     getJSONData(PRODUCT_INFO_COMMENTS_URL + localStorage.getItem("prodID") + EXT_TYPE).then(function (resultObj) {
         if (resultObj.status === "ok") {
             comments = resultObj.data;
@@ -40,7 +45,6 @@ function showProduct(product) {
     <h5>Cantidad de vendidos</h5>
     <p>${product.soldCount}</p>
     <h5>Imagenes ilustrativas</h5>
-    <p>${product.soldCount}</p>
     <div class="col-3 d-flex justify-content-between">
         <img src="` + product.images[0] + `" alt="product image" class="img-thumbnail">
         <img src="` + product.images[1] + `" alt="product image" class="img-thumbnail">
