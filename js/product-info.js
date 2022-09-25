@@ -45,14 +45,48 @@ function showProduct(product) {
     <h5>Cantidad de vendidos</h5>
     <p>${product.soldCount}</p>
     <h5>Imagenes ilustrativas</h5>
-    <div class="col-3 d-flex justify-content-between">
-        <img src="` + product.images[0] + `" alt="product image" class="img-thumbnail">
-        <img src="` + product.images[1] + `" alt="product image" class="img-thumbnail">
-        <img src="` + product.images[2] + `" alt="product image" class="img-thumbnail">
-        <img src="` + product.images[3] + `" alt="product image" class="img-thumbnail">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="width: 80%; margin: 0 10%;">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="${product.images[0]}" class="d-block w-100" alt="...">
     </div>
+    <div class="carousel-item">
+      <img src="${product.images[1]}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="${product.images[2]}" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
         `
     contenedor.innerHTML = htmlContentToAppend;
+
+    //PRODUCTOS RELACIONADOS
+    let relatedProductsContainer = document.getElementById("relatedProducts")
+    let relatedProducts = product.relatedProducts
+    let relatedProductsContent = "";
+    for (const rp of relatedProducts) {
+        console.log(rp)
+        relatedProductsContent += `
+            <div onclick="setProdID(${rp.id})" class="cursor-active">
+                <img src="${rp.image}" alt="product image" class="img-thumbnail">
+                <h5>${rp.name}</h5>
+            </div>`
+    }
+    relatedProductsContainer.innerHTML = relatedProductsContent;
+}
+
+function setProdID(id) {
+    localStorage.setItem("prodID", id);
+    window.location = "product-info.html"
 }
 
 //MOSTRAR COMENTARIOS DEL PRODUCTO
