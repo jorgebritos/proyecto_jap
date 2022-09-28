@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function(){
     expandableMenu.appendChild(option);
 });
 
-function asd(valor) {
+function menu(valor) {
     switch (valor) {
         case "Mi Perfil":
             window.location = "my-profile.html";

@@ -22,7 +22,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100 justify-content-between">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
+            <a class="nav-link active" href="main.html">Inicio</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="categories.html">Categorías</a>
@@ -30,8 +30,8 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item">
-          </li>
+          <select class="nav-item"  onChange="menu(this.options[this.selectedIndex].value)" id="email" style="background-color: transparent; border-color: transparent; cursor: pointer;">
+          </select>
         </ul>
       </div>
     </div>
@@ -63,7 +63,7 @@
     </div>
     <div >
       <h2>Productos Relacionados</h2>
-      <div id="relatedProducts" class="col-5 d-flex justify-content-lg-center">
+      <div id="relatedProducts" class="col-5 d-flex">
       </div>
     </div>
   </main>
