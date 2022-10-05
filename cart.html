@@ -29,7 +29,8 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <select class="nav-item"  onChange="menu(this.options[this.selectedIndex].value)" id="email" style="background-color: transparent; border-color: transparent; cursor: pointer;">
+          <select class="nav-item" onChange="menu(this.options[this.selectedIndex].value)" id="email"
+            style="background-color: transparent; border-color: transparent; cursor: pointer;">
           </select>
         </ul>
       </div>
@@ -37,8 +38,46 @@
   </nav>
   <main>
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <h1>Carrito de Compras</h1>
+      <h3>Artículos a Comprar</h3>
+
+      <div>
+        <table id="products" class="table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Nombre</th>
+              <th>Costo</th>
+              <th>Cantidad</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="Envio">
+        <h3>Tipo de Envío</h3>
+        <label for="premium">Premium de 2 a 5 días(15%)</label>
+        <input type="radio" name="tipo_envio" value="Premium" id="premium">
+
+        <label for="express">Express de 5 a 8 días(7%)</label>
+        <input type="radio" name="tipo_envio" value="Express" id="express">
+
+        <label for="standard">Standard de 12 a 15 días(5%)</label>
+        <input type="radio" name="tipo_envio" value="Standard" id="standard">
+
+        <br>
+        <label for="calle">Calle</label>
+        <input type="text" name="calle" id="calle">
+        <label for="numero-calle">Número</label>
+        <input type="text" name="numero-calle" id="numero-calle">
+        <br>
+        <label for="esquina-calle">Esquina</label>
+        <input type="text" name="esquina-calle" id="esquina-calle">
+        <br><br>
+        <button>Enviar</button>
       </div>
     </div>
   </main>
