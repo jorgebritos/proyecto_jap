@@ -50,6 +50,7 @@
               <th>Costo</th>
               <th>Cantidad</th>
               <th>Subtotal</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -57,28 +58,132 @@
         </table>
       </div>
 
-      <div id="Envio">
-        <h3>Tipo de Envío</h3>
-        <label for="premium">Premium de 2 a 5 días(15%)</label>
-        <input type="radio" name="tipo_envio" value="Premium" id="premium">
+      <form class="needs-validation" onsubmit="event.preventDefault()" novalidate>
+        <div id="Envio">
+          <h3>Tipo de Envío</h3>
+          <fieldset>
+            <input type="radio" name="tipo_envio" value="0.15" id="premium"> Premium de 2 a 5 días(15%)
+            <br>
+            <input type="radio" name="tipo_envio" value="0.07" id="express"> Express de 5 a 8 días(7%)
+            <br>
+            <input type="radio" checked name="tipo_envio" value="0.05" id="standard"> Standard de 12 a 15 días(5%)
+          </fieldset>
+          <br>
+          <div class="d-flex flex-column">
 
-        <label for="express">Express de 5 a 8 días(7%)</label>
-        <input type="radio" name="tipo_envio" value="Express" id="express">
+            <div class="d-flex row">
+              <div class="col-md-4">
+                <label for="calle" class="form-label">Calle:</label>
+                <input type="text" class="form-control" required name="calle" id="calle" class="is-invalid">
+                <div class="invalid-feedback">
+                  Por favor seleccione una calle!
+                </div>
+              </div>
 
-        <label for="standard">Standard de 12 a 15 días(5%)</label>
-        <input type="radio" name="tipo_envio" value="Standard" id="standard">
+              <div class="col-md-4">
+                <label for="numero-calle" class="form-label">Número:</label>
+                <input type="text" class="form-control" required name="numero-calle" id="numero-calle">
+                <div class="invalid-feedback">
+                  Por favor seleccione un número de calle!
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mt-2">
+              <label for="esquina-calle" class="form-label">Esquina:</label>
+              <input type="text" class="form-control" required name="esquina-calle" id="esquina-calle">
+              <div class="invalid-feedback">
+                Por favor seleccione una esquina!
+              </div>
+            </div>
+          </div>
+          <br>
 
-        <br>
-        <label for="calle">Calle</label>
-        <input type="text" name="calle" id="calle">
-        <label for="numero-calle">Número</label>
-        <input type="text" name="numero-calle" id="numero-calle">
-        <br>
-        <label for="esquina-calle">Esquina</label>
-        <input type="text" name="esquina-calle" id="esquina-calle">
-        <br><br>
-        <button>Enviar</button>
-      </div>
+          <hr>
+
+          <div id="costos">
+            <h3>Costos</h3>
+            <div class="d-flex column justify-content-between container border">
+              <div class="d-flex row">
+                <p>Subtotal</p>
+                <p>Costo del producto por cantidad</p>
+              </div>
+              <div>
+                <p id="subtotal"></p>
+              </div>
+            </div>
+            <div class="d-flex column justify-content-between container border">
+              <div class="d-flex row">
+                <p>Costo de Envio</p>
+                <p>Según el tipo de envío</p>
+              </div>
+              <div>
+                <p id="tipoEnvio"></p>
+              </div>
+            </div>
+            <div class="d-flex column justify-content-between container border">
+              <p>Total ($)</p>
+              <p id="total"></p>
+            </div>
+          </div>
+
+          <hr>
+          <div class="column d-flex">
+            <p class="m-2" id="descPaymentType"></p>
+            <button type="button" class="btn btn-primary" id="btn-modal" data-bs-toggle="modal"
+              data-bs-target="#exampleModal">Seleccionar</button>
+          </div>
+          <div id="err-pt" class="text-danger"></div>
+
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Forma de Pago</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <input type="radio" name="transferenciaTipo" id="tarjeta" value="tarjeta"> Tarjeta de Crédito
+                  <hr>
+                  <div class="d-flex m-auto">
+                    <div class="col-md-4">
+                      <label for="numeroTarjeta" class="form-label">Número de Tarjeta</label>
+                      <input type="text" class="input-tarjeta form-control" name="numeroTarjeta" id="numeroTarjeta">
+                      <div class="invalid-feedback">Indique número de tarjeta!</div>
+                    </div>
+                    <div class="col-md-4 mx-4">
+                      <label for="codigoSeg" class="form-label">Código de Seg</label>
+                      <input type="text" class="input-tarjeta form-control" name="codigoSeg" id="codigoSeg">
+                      <div class="invalid-feedback">Indique Codigo de Seguridad!</div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 my-3">
+                    <label for="vencimientoT" class="form-label">Vencimiento (MM/AA)</label>
+                    <input type="text" class="input-tarjeta form-control" name="vencimientoT" id="vencimientoT">
+                    <div class="invalid-feedback">Indique vencimiento de la tarjeta!</div>
+                  </div>
+                  <br><br>
+                  <input type="radio" name="transferenciaTipo" id="transferencia" value="transferencia"> Transferencia
+                  bancaria
+                  <hr>
+                  <div class="col-md-4">
+                    <label for="numCuenta" class="form-label">Número de Cuenta</label>
+                    <input type="text" class="input-transferencia form-control" required name="numCuenta"
+                      id="numCuenta">
+                    <div class="invalid-feedback">Indique número de cuenta</div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" onclick='mostrarTipoPago()'
+                    data-bs-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </form>
+
+      <button id="enviar" type="submit" class="btn btn-primary w-100 mt-5">Finalizar Compra</button>
+    </div>
     </div>
   </main>
   <footer class="text-muted">
@@ -99,9 +204,13 @@
       <div></div>
     </div>
   </div>
+
+  <div id="success"></div>
+
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
+  <script src="js/menu.js"></script>
 </body>
 
 </html>
