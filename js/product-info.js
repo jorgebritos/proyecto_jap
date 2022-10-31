@@ -6,9 +6,9 @@ let comments = [];
 let comment = {};
 
 //OBJETOS
-let commentsCont = document.getElementById("comments")
+let commentsCont = document.getElementById("comments");
 let contenedor = document.getElementById("container");
-let newComment = document.getElementById("sendComment")
+let newComment = document.getElementById("sendComment");
 
 //OBTENER DATOS DEL PRODUCTO Y SUS COMENTARIOS
 document.addEventListener("DOMContentLoaded", function (e) {
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     getJSONData(PRODUCT_INFO_URL + localStorage.getItem("prodID") + EXT_TYPE).then(function (resultObj) {
         if (resultObj.status === "ok") {
             product = resultObj.data;
-            showProduct(product)
+            showProduct(product);
         }
     });
 
@@ -32,24 +32,24 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
 function agregarACarrito() {
     if (localStorage.getItem("listaCarrito")) {
-        var carritoLista = JSON.parse(localStorage.getItem("listaCarrito"))
+        var carritoLista = JSON.parse(localStorage.getItem("listaCarrito"));
         if (carritoLista.find(p => p.name == product.name)) {
-            return 0
+            return 0;
         }
     } else {
         var carritoLista = [];
     }
 
-    let unitCost = product.cost
-    let image = product.images[0]
-    let count = 1
+    let unitCost = product.cost;
+    let image = product.images[0];
+    let count = 1;
 
-    let { id, name, currency } = product
-    let usefulProductData = {id, name, count, unitCost, currency, image}
-    console.log(usefulProductData)
+    let { id, name, currency } = product;
+    let usefulProductData = {id, name, count, unitCost, currency, image};
+    console.log(usefulProductData);
     carritoLista.push(usefulProductData);
-    localStorage.setItem("listaCarrito", JSON.stringify(carritoLista))
-    console.log(JSON.parse(localStorage.getItem("listaCarrito")))
+    localStorage.setItem("listaCarrito", JSON.stringify(carritoLista));
+    console.log(JSON.parse(localStorage.getItem("listaCarrito")));
 }
 
 
@@ -101,26 +101,26 @@ function showProduct(product) {
         <span class="visually-hidden">Next</span>
     </button>
     </div>
-        `
+        `;
     contenedor.innerHTML = htmlContentToAppend;
 
     //PRODUCTOS RELACIONADOS
-    let relatedProductsContainer = document.getElementById("relatedProducts")
-    let relatedProducts = product.relatedProducts
+    let relatedProductsContainer = document.getElementById("relatedProducts");
+    let relatedProducts = product.relatedProducts;
     let relatedProductsContent = "";
     for (const rp of relatedProducts) {
         relatedProductsContent += `
             <div onclick="setProdID(${rp.id})" class="cursor-active">
                 <img src="${rp.image}" alt="product image" class="img-thumbnail">
                 <h5>${rp.name}</h5>
-            </div>`
+            </div>`;
     }
     relatedProductsContainer.innerHTML = relatedProductsContent;
 }
 
 function setProdID(id) {
     localStorage.setItem("prodID", id);
-    window.location = "product-info.html"
+    window.location = "product-info.html";
 }
 
 //MOSTRAR COMENTARIOS DEL PRODUCTO
@@ -134,7 +134,7 @@ function showComments(comments) {
 
             //SI EL SCORE ES 5...
             for (let i = 0; i < numberStars; i++) {
-                stars += `<span class="fa fa-star checked"></span>`
+                stars += `<span class="fa fa-star checked"></span>`;
                 cont++;
             }
             if (numberStars === 5) return stars;
@@ -143,7 +143,7 @@ function showComments(comments) {
             let missing = 5 - cont;
 
             for (let i = 0; i < missing; i++) {
-                stars += `<span class="fa fa-star"></span>`
+                stars += `<span class="fa fa-star"></span>`;
             }
             return stars;
         }
@@ -156,17 +156,17 @@ function showComments(comments) {
             <small>${comment.description}</small>
         </div>
         <br>
-        `
+        `;
         commentsCont.innerHTML += htmlContentToAppend;
     }
 }
 
 // (DESAFIATE) AÑADIR UN NUEVO COMENTARIO
 newComment.addEventListener("click", function () {
-    let text = document.getElementById("comment")
-    let score = document.getElementById("score")
+    let text = document.getElementById("comment");
+    let score = document.getElementById("score");
 
-    if (!text.value) return alert("El comentario no puede estar vacío")
+    if (!text.value) return alert("El comentario no puede estar vacío");
 
     var date = new Date();
     let dateTime = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate() + " " + (date.getUTCHours() - 3) + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
@@ -177,10 +177,10 @@ newComment.addEventListener("click", function () {
         score: Number(score.value),
         user: localStorage.getItem("email"),
         product: Number(localStorage.getItem("prodID"))
-    }
-    comments.push(comment)
+    };
+    comments.push(comment);
     commentsCont.innerHTML = "";
-    showComments(comments)
+    showComments(comments);
 
     text.value = "";
     score.value = 1;

@@ -3,18 +3,18 @@
 let expandableMenu = document.getElementById('email');
 let option = document.createElement("option");
 option.hidden = true;
-let value = localStorage.getItem("email")
+let value = localStorage.getItem("email");
 option.text = value;
 expandableMenu.appendChild(option);
 
 option = document.createElement("option");
-value = "Mi Carrito"
+value = "Mi Carrito";
 option.value = value;
 option.text = value;
 expandableMenu.appendChild(option);
 
 option = document.createElement("option");
-value = "Mi Perfil"
+value = "Mi Perfil";
 option.value = value;
 option.text = value;
 expandableMenu.appendChild(option);

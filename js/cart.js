@@ -3,13 +3,13 @@ let costoEnvio = 0;
 let tipoPago = "";
 let activated = [];
 
-let controls = document.querySelectorAll('input[class="form-control"]')
+let controls = document.querySelectorAll('input[class="form-control"]');
 let claseEnvios = document.querySelectorAll('input[name="tipo_envio"]');
 let clasePagos = document.querySelectorAll('input[name="transferenciaTipo"]');
 let descPaymentType = document.getElementById("descPaymentType");
-let errPaymentType = document.getElementById("err-pt")
-let inputsTarjeta = document.getElementsByClassName("input-tarjeta")
-let inputsTransferencia = document.getElementsByClassName("input-transferencia")
+let errPaymentType = document.getElementById("err-pt");
+let inputsTarjeta = document.getElementsByClassName("input-tarjeta");
+let inputsTransferencia = document.getElementsByClassName("input-transferencia");
 
 //AQUI SE CALCULA EL SUBTOTAL DEL APARTADO DE COSTOS, ADEMÁS DE TRANSFORMAR LOS PRECIOS QUE SEAN DE PESOS A DÓLARES
 let calcularSubtotal = function () {
@@ -24,13 +24,13 @@ let calcularSubtotal = function () {
             // FIXED PARA TRAERME LOS PRIMEROS 2 DECIMALES (ME PARECIÓ NECESARIO YA QUE SON DÓLARES)
             aux += Number(((Number(subtotales[i].innerHTML)) / dolar).toFixed(2));
         } else {
-            aux += Number(subtotales[i].innerHTML)
+            aux += Number(subtotales[i].innerHTML);
         }
     }
     subtotalGeneral = aux;
 
     // INVOCO A calcularIva YA QUE SI EL SUBTOTAL CAMBIA, EL IVA SE CALCULA CON ELLO
-    calcularIva()
+    calcularIva();
 }
 
 let calcularIva = function () {
@@ -70,8 +70,8 @@ let mostrarTipoPago = function () {
     switch (tipoPago) {
 
         case "tarjeta":
-            descPaymentType.innerHTML = "Tarjeta de Crédito"
-            activated = document.querySelectorAll('input[class="input-tarjeta form-control"]')
+            descPaymentType.innerHTML = "Tarjeta de Crédito";
+            activated = document.querySelectorAll('input[class="input-tarjeta form-control"]');
             for (let i of inputsTransferencia) {
                 i.disabled = true;
                 i.required = false;
@@ -83,8 +83,8 @@ let mostrarTipoPago = function () {
             break;
 
         case "transferencia":
-            descPaymentType.innerHTML = "Transferencia Bancaria"
-            activated = document.querySelectorAll('input[class="input-transferencia form-control"]')
+            descPaymentType.innerHTML = "Transferencia Bancaria";
+            activated = document.querySelectorAll('input[class="input-transferencia form-control"]');
             for (let i of inputsTransferencia) {
                 i.disabled = false;
                 i.required = true;
@@ -97,7 +97,7 @@ let mostrarTipoPago = function () {
 
         // EN CASO DE QUE NO TENGA SELECCIONADO NINGUNO, SE HARÁ LO SIGUIENTE
         default:
-            descPaymentType.innerHTML = "No ha seleccionado"
+            descPaymentType.innerHTML = "No ha seleccionado";
             for (let i of inputsTransferencia) {
                 i.disabled = true;
                 i.required = false;
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
     getJSONData(CART_INFO_URL + "25801" + EXT_TYPE).then(function (resultObj) {
         if (resultObj.status === "ok") {
             products = resultObj.data.articles;
-            showCartInfo(products)
+            showCartInfo(products);
         }
     });
 
@@ -129,20 +129,20 @@ document.addEventListener("DOMContentLoaded", function () {
     getJSONData(DOLAR).then(function (resultObj) {
         if (resultObj.status === "ok") {
             dolar = resultObj.data.rates['USD'].buy;
-            localStorage.setItem("dolar", dolar)
+            localStorage.setItem("dolar", dolar);
         }
     });
 
     function showCartInfo(productsArray) {
 
         let itemsPersonales = JSON.parse(localStorage.getItem("listaCarrito"));
-        productsArray.push(...itemsPersonales)
+        productsArray.push(...itemsPersonales);
 
         let tbodyRef = document.getElementById('products').getElementsByTagName('tbody')[0];
 
         for (const product of productsArray) {
             let { name, unitCost, count, image } = product;
-            let itteratorProduct = { image, name, unitCost, count }
+            let itteratorProduct = { image, name, unitCost, count };
 
             var newItem = tbodyRef.insertRow();
 
@@ -158,19 +158,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     case "image":
                         let img = document.createElement("img");
                         img.src = `/${itteratorProduct[prop]}`;
-                        img.classList = "col-12"
+                        img.classList = "col-12";
                         newCell.style = 'width: 100px';
-                        newCell.appendChild(img)
+                        newCell.appendChild(img);
                         break;
 
                     case "count":
                         input = document.createElement("INPUT");
                         input.setAttribute("type", "number");
                         input.setAttribute("min", "1");
-                        input.setAttribute("id", `${itteratorProduct['name']}Count`)
-                        input.setAttribute("oninput", "validity.valid||(value='1')")
-                        input.setAttribute("value", itteratorProduct[prop])
-                        newCell.appendChild(input)
+                        input.setAttribute("id", `${itteratorProduct['name']}Count`);
+                        input.setAttribute("oninput", "validity.valid||(value='1')");
+                        input.setAttribute("value", itteratorProduct[prop]);
+                        newCell.appendChild(input);
 
                         document.getElementById(`${itteratorProduct['name']}Count`).addEventListener("input", function () {
 
@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             let cantidad = document.getElementById(`${itteratorProduct['name']}Count`).value;
                             subtotal.innerHTML = costoUnitario * cantidad;
 
-                            calcularSubtotal(cantidad);
+                            calcularSubtotal(cantidad);;
                         })
 
                         break;
@@ -188,8 +188,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         let p = document.createElement("p");
                         p.setAttribute("class", "unitCost");
                         var newText = document.createTextNode(product.currency + " " + itteratorProduct[prop]);
-                        p.appendChild(newText)
-                        newCell.id = `${itteratorProduct['name']}UnitCost`
+                        p.appendChild(newText);
+                        newCell.id = `${itteratorProduct['name']}UnitCost`;
                         newCell.appendChild(p);
                         break;
 
@@ -203,11 +203,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             //CASILLA SUBTOTAL
             let newCell = newItem.insertCell();
-            newCell.id = `${itteratorProduct['name']}Subtotal`
+            newCell.id = `${itteratorProduct['name']}Subtotal`;
             let p = document.createElement("p");
-            p.setAttribute("class", "subtotal")
+            p.setAttribute("class", "subtotal");
             var newText = document.createTextNode(itteratorProduct.count * itteratorProduct.unitCost);
-            p.appendChild(newText)
+            p.appendChild(newText);
             newCell.appendChild(p);
 
             // CASILLA DE ELIMINAR PRODUCTO
@@ -219,8 +219,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 //EN CASO DE SELECCIONARLO, ADEMÁS DE ELIMINARLO DE LA LISTA, REINICIA LA PÁGINA PARA QUE REFLEJE LOS CAMBIOS
                 //EN SU TOTALIDAD (NO ME PARECE LA MANERA MÁS CONVENIENTE, PERO PARA UNA PRIMERA INSTANCIA, ES LO QUE SE ME OCURRIÓ)
-                itemsPersonales = itemsPersonales.filter(p => p.name != itteratorProduct.name)
-                localStorage.setItem("listaCarrito", JSON.stringify(itemsPersonales))
+                itemsPersonales = itemsPersonales.filter(p => p.name != itteratorProduct.name);
+                localStorage.setItem("listaCarrito", JSON.stringify(itemsPersonales));
                 window.location = "cart.html";
 
             })
@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // AQUÍ ES CUANDO SE ACTIVAN LOS FEEDBACK DE LOS INPUT DEL FORMULARIO CUANDO EL USUARIO NO COMPLETA LOS DATOS
     // O SE BORRAN LOS DATOS Y SE MUESTRA EL POP-UP SI SE HACE CORRECTAMENTE
 
-    var form = document.querySelector('.needs-validation')
+    var form = document.querySelector('.needs-validation');
 
     form.addEventListener('submit', function (event) {
 
@@ -247,16 +247,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         if (tipoPago === "") {
             //SI EL USUARIO NO SELECCIONÓ NINGUN MÉTODO DE PAGO...
-            errPaymentType.innerHTML = "Debe seleccionar una forma de pago"
-            form.classList.add('was-validated')
+            errPaymentType.innerHTML = "Debe seleccionar una forma de pago";
+            form.classList.add('was-validated');
             return 1;
         } else {
-            errPaymentType.innerHTML = ""
+            errPaymentType.innerHTML = "";
         }
         if (!form.checkValidity()) {
-            form.classList.add('was-validated')
-            event.preventDefault()
-            event.stopPropagation()
+            form.classList.add('was-validated');
+            event.preventDefault();
+            event.stopPropagation();
         } else {
             let success = document.getElementById("success");
 
@@ -267,11 +267,11 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="alert alert-success alert-dismissible fade" role="alert" id="alert-success">
                 <p>La compra se ha realizado correctamente!</p>
                 <button type="button" class="btn-close" id="cerrarPopup" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>`
+            </div>`;
             document.getElementById("alert-success").classList.add("show");
 
             //PARA QUE CUANDO SE QUITEN LOS DATOS DE LOS INPUTS, NO SIGA MOSTRANDO LOS FEEDBACK
-            form.classList.remove('was-validated')
+            form.classList.remove('was-validated');
 
             //LUEGO DE 4 SEGUNDOS, SE ELIMINA AUTOMÁTICAMENTE EL POP-UP
             setTimeout(() => {
@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (!form.checkValidity()) {
                 if (tipoPago !== "") {
-                    errPaymentType.innerHTML = ""
+                    errPaymentType.innerHTML = "";
                 }
             }
         })

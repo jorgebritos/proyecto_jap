@@ -27,9 +27,9 @@ function showProducts(array) {
                 </div>
             </div>
         </div>
-        `
+        `;
     }
-    document.getElementById("title").innerHTML = "Verás aquí todos los productos de la categoria seleccionada"
+    document.getElementById("title").innerHTML = "Verás aquí todos los productos de la categoria seleccionada";
     document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
 }
 

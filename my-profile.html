@@ -44,17 +44,76 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <select class="nav-item"  onChange="menu(this.options[this.selectedIndex].value)" id="email" style="background-color: transparent; border-color: transparent; cursor: pointer;">
+          <select class="nav-item" onChange="menu(this.options[this.selectedIndex].value)" id="email"
+            style="background-color: transparent; border-color: transparent; cursor: pointer;">
           </select>
         </ul>
       </div>
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+    <div class="container mx-auto">
+      <div class="d-flex col justify-content-between">
+        <h1>Perfil</h1>
+        <img src="" style="width: auto; height: 100px" id="imgPerfil">
       </div>
+
+      <hr>
+
+      <div class="d-flex row justify-content-between">
+        <div class="col-md-4">
+          <label for="nombre" class="form-label">Primer Nombre*</label>
+          <input type="text" class="form-control" required name="nombre" id="nombre">
+          <div class="invalid-feedback">
+            Debe indicar su nombre!
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="segundo-nombre" class="form-label">Segundo Nombre</label>
+          <input type="text" class="form-control nr" id="segundo-nombre">
+        </div>
+      </div>
+
+      <div class="d-flex row justify-content-between">
+        <div class="col-md-4">
+          <label for="apellido" class="form-label">Primer Apellido*</label>
+          <input type="text" class="form-control" required id="apellido">
+          <div class="invalid-feedback">
+            Debe indicar su apellido!
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="segundo-apellido" class="form-label">Segundo Apellido</label>
+          <input type="text" class="form-control nr" id="segundo-apellido">
+        </div>
+      </div>
+
+      <div class="d-flex row justify-content-between">
+        <div class="col-md-4">
+          <label for="email" class="form-label">E-mail*</label>
+          <input type="text" class="form-control" required name="email" id="mail">
+          <div class="invalid-feedback">
+            Debe indicar su dirección de e-mail!
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="iPerfil" class="form-label">Imagen de Perfil</label>
+          <input type='file' class="form-control nr" id="img" onchange="readURL(this);" />
+        </div>
+      </div>
+
+      <div class="col-md-4 mt-2 justify-content-between">
+        <label for="tel" class="form-label">Teléfono de Contacto</label>
+        <input type="number" class="form-control nr" id="tel">
+      </div>
+
+      <hr>
+
+      <input type="button" class="btn btn-primary" id="btn-enviar" value="Guardar Cambios">
+      <p class="text-danger" id="errDesc"></p>
     </div>
   </main>
   <footer class="text-muted">
