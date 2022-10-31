@@ -54,8 +54,6 @@ document.getElementById("rangeFilterCount").addEventListener("click", function (
 
     productsArray = unSorted.filter(p => p.cost >= minCost && p.cost <= maxCost)
 
-    console.log(productsArray)
-
     showProducts(productsArray);
 });
 
