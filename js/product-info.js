@@ -1,6 +1,7 @@
 //VALORES
 let product = {};
 let comments = [];
+let carritoLista = [];
 
 //Donde se guarda el comentario que crea el usuario
 let comment = {};
@@ -9,6 +10,8 @@ let comment = {};
 let commentsCont = document.getElementById("comments");
 let contenedor = document.getElementById("container");
 let newComment = document.getElementById("sendComment");
+let relatedProductsContainer = document.getElementById("relatedProducts");
+
 
 //OBTENER DATOS DEL PRODUCTO Y SUS COMENTARIOS
 document.addEventListener("DOMContentLoaded", function (e) {
@@ -31,32 +34,24 @@ document.addEventListener("DOMContentLoaded", function (e) {
 });
 
 function agregarACarrito() {
-    if (localStorage.getItem("listaCarrito")) {
-        var carritoLista = JSON.parse(localStorage.getItem("listaCarrito"));
-        if (carritoLista.find(p => p.name == product.name)) {
-            return 0;
-        }
-    } else {
-        var carritoLista = [];
-    }
+
+    if (localStorage.getItem("listaCarrito")) carritoLista = JSON.parse(localStorage.getItem("listaCarrito"));
+    if (carritoLista.find(p => p.name == product.name)) return 0;
 
     let unitCost = product.cost;
     let image = product.images[0];
     let count = 1;
-
     let { id, name, currency } = product;
-    let usefulProductData = {id, name, count, unitCost, currency, image};
-    console.log(usefulProductData);
+    let usefulProductData = { id, name, count, unitCost, currency, image };
+
     carritoLista.push(usefulProductData);
     localStorage.setItem("listaCarrito", JSON.stringify(carritoLista));
-    console.log(JSON.parse(localStorage.getItem("listaCarrito")));
 }
 
 
 //MOSTRAR DATOS PRODUCTO
 function showProduct(product) {
-    let htmlContentToAppend = "";
-    htmlContentToAppend += `
+    let htmlContentToAppend = `
     <h2>${product.name}</h2>
     <button onclick="agregarACarrito()">Comprar</button>
     <hr>
@@ -75,7 +70,7 @@ function showProduct(product) {
             <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
             <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
-        <div class="carousel-inner">
+        <div class="carousel-inner" id="carrousel">
             <div class="carousel-item active" data-bs-interval="5000">
                 <img src="${product.images[0]}" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
@@ -102,10 +97,10 @@ function showProduct(product) {
     </button>
     </div>
         `;
+
     contenedor.innerHTML = htmlContentToAppend;
 
     //PRODUCTOS RELACIONADOS
-    let relatedProductsContainer = document.getElementById("relatedProducts");
     let relatedProducts = product.relatedProducts;
     let relatedProductsContent = "";
     for (const rp of relatedProducts) {
@@ -120,7 +115,7 @@ function showProduct(product) {
 
 function setProdID(id) {
     localStorage.setItem("prodID", id);
-    window.location = "product-info.html";
+    location.href = "./product-info.html";
 }
 
 //MOSTRAR COMENTARIOS DEL PRODUCTO

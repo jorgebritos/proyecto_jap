@@ -1,12 +1,14 @@
 let obj = {};
-let img = document.getElementById("imgPerfil");
-let inputs = document.getElementsByClassName("form-control");
+
+
+
 let requiredI = [];
 let notRequiredI = [];
+let account = JSON.parse(localStorage.getItem("account"));
+
 let errDesc = document.getElementById("errDesc");
 let btn = document.getElementById("btn-enviar");
 let imgFile = "";
-let account = JSON.parse(localStorage.getItem("account"));
 
 function readURL(input) {
     if (input.files && input.files[0]) {
@@ -20,13 +22,18 @@ function readURL(input) {
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    let inputs = document.getElementsByClassName("form-control");
+
     for (const i of inputs) {
         if (i.required === true) requiredI.push(i);
         if (i.required === false) notRequiredI.push(i);
     }
 
+    let img = document.getElementById("imgPerfil");
+
     if (account) {
         for (const i of inputs) {
+
             if (account[i.id] && i.id !== "img") i.value = account[i.id];
 
             if (account[i.id] && i.id === "img") {
@@ -38,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     btn.addEventListener("click", () => {
+        
         for (const i of requiredI) {
             if (i.value == "") return alert("Rellene los campos obligatorios");
             obj[i.id] = i.value;
@@ -52,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         obj = JSON.stringify(obj);
 
         localStorage.setItem("account", obj);
-        window.location = "my-profile.html";
+        location.href = "./my-profile.html";
     })
 
 })

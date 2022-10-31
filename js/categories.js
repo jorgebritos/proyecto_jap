@@ -1,49 +1,61 @@
 const ORDER_ASC_BY_NAME = "AZ";
 const ORDER_DESC_BY_NAME = "ZA";
 const ORDER_BY_PROD_COUNT = "Cant.";
+
 let currentCategoriesArray = [];
+
 let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
 
 function sortCategories(criteria, array) {
-    let result = [];
-    if (criteria === ORDER_ASC_BY_NAME) {
-        result = array.sort(function (a, b) {
-            if (a.name < b.name) { return -1; };
-            if (a.name > b.name) { return 1; };
-            return 0;
-        });
-    } else if (criteria === ORDER_DESC_BY_NAME) {
-        result = array.sort(function (a, b) {
-            if (a.name > b.name) { return -1; };
-            if (a.name < b.name) { return 1; };
-            return 0;
-        });
-    } else if (criteria === ORDER_BY_PROD_COUNT) {
-        result = array.sort(function (a, b) {
-            let aCount = parseInt(a.productCount);
-            let bCount = parseInt(b.productCount);
 
-            if (aCount > bCount) { return -1; };
-            if (aCount < bCount) { return 1; };
-            return 0;
-        });
+    let result = [];
+
+    switch (criteria) {
+        case "AZ":
+
+            result = array.sort(function (a, b) {
+                if (a.name < b.name) { return -1; };
+                if (a.name > b.name) { return 1; };
+                return 0;
+            });
+            break;
+
+        case "ZA":
+
+            result = array.sort(function (a, b) {
+                if (a.name > b.name) { return -1; };
+                if (a.name < b.name) { return 1; };
+                return 0;
+            });
+            break;
+
+        case "Cant.":
+
+            result = array.sort(function (a, b) {
+
+                if (Number(a.productCount) > Number(b.productCount)) { return -1; };
+                if (Number(a.productCount) < Number(b.productCount)) { return 1; };
+                return 0;
+            });
+            break;
+
     }
 
     return result;
+
 }
 
 function setCatID(id) {
     localStorage.setItem("catID", id);
-    window.location = "products.html";
+    location.href = "./products.html";
 }
 
 function showCategoriesList() {
 
     let htmlContentToAppend = "";
-    for (let i = 0; i < currentCategoriesArray.length; i++) {
-        let category = currentCategoriesArray[i];
+    for (const category of currentCategoriesArray) {
 
         if (((minCount == undefined) || (minCount != undefined && parseInt(category.productCount) >= minCount)) &&
             ((maxCount == undefined) || (maxCount != undefined && parseInt(category.productCount) <= maxCount))) {
@@ -71,6 +83,7 @@ function showCategoriesList() {
 }
 
 function sortAndShowCategories(sortCriteria, categoriesArray) {
+    
     currentSortCriteria = sortCriteria;
 
     if (categoriesArray != undefined) {
@@ -92,18 +105,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
             currentCategoriesArray = resultObj.data;
             showCategoriesList();
         }
-    });
-
-    document.getElementById("sortAsc").addEventListener("click", function () {
-        sortAndShowCategories(ORDER_ASC_BY_NAME);
-    });
-
-    document.getElementById("sortDesc").addEventListener("click", function () {
-        sortAndShowCategories(ORDER_DESC_BY_NAME);
-    });
-
-    document.getElementById("sortByCount").addEventListener("click", function () {
-        sortAndShowCategories(ORDER_BY_PROD_COUNT);
     });
 
     document.getElementById("clearRangeFilter").addEventListener("click", function () {

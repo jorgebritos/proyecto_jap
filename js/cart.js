@@ -15,19 +15,20 @@ let inputsTransferencia = document.getElementsByClassName("input-transferencia")
 let calcularSubtotal = function () {
     let subtotales = document.getElementsByClassName("subtotal");
     let currencies = document.getElementsByClassName("unitCost");
-    let aux = 0;
+
+    let sumaSubtotales = 0;
     for (let i = 0; i < subtotales.length; i++) {
         let currency = currencies[i].innerHTML.split(" ").splice(0, 1)[0];
 
         if (currency === "UYU") {
             dolar = Number(localStorage.getItem("dolar"));
             // FIXED PARA TRAERME LOS PRIMEROS 2 DECIMALES (ME PARECIÓ NECESARIO YA QUE SON DÓLARES)
-            aux += Number(((Number(subtotales[i].innerHTML)) / dolar).toFixed(2));
+            sumaSubtotales += Number(((Number(subtotales[i].innerHTML)) / dolar).toFixed(2));
         } else {
-            aux += Number(subtotales[i].innerHTML);
+            sumaSubtotales += Number(subtotales[i].innerHTML);
         }
     }
-    subtotalGeneral = aux;
+    subtotalGeneral = sumaSubtotales;
 
     // INVOCO A calcularIva YA QUE SI EL SUBTOTAL CAMBIA, EL IVA SE CALCULA CON ELLO
     calcularIva();
@@ -221,7 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 //EN SU TOTALIDAD (NO ME PARECE LA MANERA MÁS CONVENIENTE, PERO PARA UNA PRIMERA INSTANCIA, ES LO QUE SE ME OCURRIÓ)
                 itemsPersonales = itemsPersonales.filter(p => p.name != itteratorProduct.name);
                 localStorage.setItem("listaCarrito", JSON.stringify(itemsPersonales));
-                window.location = "cart.html";
+                location.href = "./cart.html";
 
             })
 
@@ -278,29 +279,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("cerrarPopup").click();
             }, 4000);
 
-            //ELIMINANDO DATOS LUEGO DE COMPLETAR CORRECTAMENTE EL FORMULARIO (NECESITA REFACTORING)
 
-            for (const e of controls) {
-                e.value = "";
+            //ELIMINANDO DATOS LUEGO DE COMPLETAR CORRECTAMENTE EL FORMULARIO
+            let reiniciar = (toReplace) => {
+                for (let i of toReplace) {
+                    i.value = "";
+                }
+
+                for (const r of clasePagos) {
+                    r.checked = false;
+                }
+
+                // PARA QUE SE REINICIE EL TEXTO QUE MUESTRA EL TIPO DE PAGO
+                tipoPago = "";
+                mostrarTipoPago();
             }
 
-            for (const e of inputsTarjeta) {
-                e.value = "";
-            }
+            reiniciar([...controls, ...inputsTarjeta, ...inputsTransferencia]);
 
-            for (const e of inputsTransferencia) {
-                e.value = "";
-            }
-
-            for (const r of clasePagos) {
-                r.checked = false;
-            }
-
-            //PARA QUE ENTRE AL DEFAULT DEL SWITCH
-            tipoPago = "";
-
-            // PARA QUE SE REINICIE EL TEXTO QUE MUESTRA EL TIPO DE PAGO
-            mostrarTipoPago();
         }
 
     }, false)

@@ -1,14 +1,25 @@
-document.addEventListener("DOMContentLoaded", function(){
-    document.getElementById("autos").addEventListener("click", function() {
-        localStorage.setItem("catID", 101);
-        window.location = "products.html";
-    });
-    document.getElementById("juguetes").addEventListener("click", function() {
-        localStorage.setItem("catID", 102);
-        window.location = "products.html";
-    });
-    document.getElementById("muebles").addEventListener("click", function() {
-        localStorage.setItem("catID", 103);
-        window.location = "products.html";
-    });
-});
+function getByID(input) {
+
+    let id = input.id;
+
+    switch (id) {
+
+        case "autos":
+
+            localStorage.setItem("catID", 101);
+            break;
+
+        case "juguetes":
+
+            localStorage.setItem("catID", 102);
+            break;
+
+        case "muebles":
+
+            localStorage.setItem("catID", 103);
+            break;
+
+    }
+
+    location.href = "./products.html";
+}
