@@ -21,7 +21,11 @@ let calcularSubtotal = function () {
         let currency = currencies[i].innerHTML.split(" ").splice(0, 1)[0];
 
         if (currency === "UYU") {
-            dolar = Number(localStorage.getItem("dolar"));
+            if(localStorage.getItem("dolar")) {
+                dolar = Number(localStorage.getItem("dolar"));
+            } else {
+                dolar = 40.0;
+            }
             // FIXED PARA TRAERME LOS PRIMEROS 2 DECIMALES (ME PARECIÓ NECESARIO YA QUE SON DÓLARES)
             sumaSubtotales += Number(((Number(subtotales[i].innerHTML)) / dolar).toFixed(2));
         } else {
@@ -131,6 +135,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (resultObj.status === "ok") {
             dolar = resultObj.data.rates['USD'].buy;
             localStorage.setItem("dolar", dolar);
+        } else {
+            dolar = 40.0;
         }
     });
 
@@ -158,7 +164,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     case "image":
                         let img = document.createElement("img");
-                        img.src = `/${itteratorProduct[prop]}`;
+                        console.log(itteratorProduct[prop])
+                        img.src = `${itteratorProduct[prop]}`;
                         img.classList = "col-12";
                         newCell.style = 'width: 100px';
                         newCell.appendChild(img);
